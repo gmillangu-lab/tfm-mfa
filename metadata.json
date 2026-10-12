@@ -1,0 +1,6 @@
+{
+  "name": "Security Dashboard con MFA Adaptativo",
+  "description": "Plataforma de ciberseguridad con autenticación MFA adaptativa basada en huella de dispositivo, evaluación contextual en Cloud Run y auditoría en tiempo real.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
