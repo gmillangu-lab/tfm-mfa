@@ -24,15 +24,15 @@ import {
   onSnapshot 
 } from 'firebase/firestore';
 
-// 1. Lectura segura de variables de entorno de Vite
+// 1. Lectura segura de variables de entorno de Vite con respaldos
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || '',
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || '',
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || '',
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || '',
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '',
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || '',
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || ''
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || 'AIzaSyD76jaF81OoJJ7yB74iCiYs6CjDl2pzeZE',
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'tfm-mfa.firebaseapp.com',
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || 'tfm-mfa',
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || 'tfm-mfa.firebasestorage.app',
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '262417646826',
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || '1:262417646826:web:e469472ae0ff5086d30393',
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || 'G-W16B111J3B'
 };
 
 // URL del servicio Serverless en Google Cloud Run
@@ -117,8 +117,6 @@ export async function recordAccessLog(logEntry) {
     latencyMs: Number(logEntry.latencyMs) || 0,
     anonymizedDevice: logEntry.anonymizedDevice || 'Anon-Device-SHA256',
     deviceType: logEntry.deviceType || 'Desktop Browser',
-    riskScore: logEntry.riskScore ?? 15,
-    riskLevel: logEntry.riskLevel || 'LOW',
     ruleEvaluations: logEntry.ruleEvaluations || [],
     rgpdCompliant: true,
     privacyNotice: 'Anonimizado conforme al Art. 25 y 32 RGPD. No almacena IP ni PII.'
@@ -368,8 +366,6 @@ export async function testAndCreateFirestoreCollection() {
       latencyMs: 82,
       anonymizedDevice: 'fp_probe_' + Math.random().toString(36).substring(2, 6),
       deviceType: 'Sonda de Auditoría TFM',
-      riskScore: 0,
-      riskLevel: 'LOW',
       ruleEvaluations: [
         'Prueba de verificación con regla request.auth != null',
         'Validación de colección access_logs en base de datos (default)'

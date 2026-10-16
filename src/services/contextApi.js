@@ -118,13 +118,11 @@ export async function verifyContextWithCloudRun({ userId, email, fingerprintData
     isDeviceTrusted = await isDeviceAuthorizedInFirestore(fingerprintData.rawHash, userId);
   }
 
-  let riskScore = 12;
   let requireMFA = false;
   let ruleEvaluations = [];
-  let reason = 'Dispositivo habitual reconocido con baja probabilidad de riesgo.';
+  let reason = 'Dispositivo habitual reconocido.';
 
   if (forceAnomaly) {
-    riskScore = 85;
     requireMFA = true;
     ruleEvaluations = [
       'Anomalía forzada por perfil de prueba',
@@ -134,30 +132,26 @@ export async function verifyContextWithCloudRun({ userId, email, fingerprintData
     reason = 'Dispositivo sospechoso o intento anómalo simulado.';
   } else if (!isDeviceTrusted) {
     // Dispositivo nuevo o no registrado en authorized_devices
-    riskScore = 74;
     requireMFA = true;
     ruleEvaluations = [
       'Dispositivo no catalogado en Firestore: authorized_devices',
-      'Huella de renderizado/UA sin histórico previo',
-      'Evaluación de riesgo: Nivel MEDIO-ALTO (>30%) -> MFA Requerido'
+      'Huella SHA-256 no encontrada en el histórico del usuario',
+      'Política Zero-Trust: Reto MFA TOTP requerido'
     ];
     reason = 'Nuevo dispositivo detectado. Se requiere verificación de segundo factor TOTP.';
   } else {
     // Dispositivo conocido verificado en Firestore
-    riskScore = 10;
     requireMFA = false;
     ruleEvaluations = [
       'Dispositivo verificado en colección Firestore: authorized_devices',
-      'Firma criptográfica SHA-256 coincide con el perfil histórico del usuario',
-      'Nivel de riesgo aceptable (<30%) -> Acceso directo concedido'
+      'Firma criptográfica SHA-256 coincide con el perfil del usuario',
+      'Política Zero-Trust: Acceso directo autorizado'
     ];
     reason = 'Dispositivo verificado y de confianza en Firestore. Acceso directo autorizado.';
   }
 
   return {
     requireMFA,
-    riskScore,
-    riskLevel: riskScore > 70 ? 'HIGH' : riskScore > 30 ? 'MEDIUM' : 'LOW',
     reason,
     ruleEvaluations,
     latencyMs,

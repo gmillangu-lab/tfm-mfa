@@ -79,18 +79,18 @@ export default function TotpEnrollment({
 
   return (
     <div className="w-full max-w-lg mx-auto">
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl backdrop-blur-md">
+      <div className="bg-white/95 border border-sky-100 rounded-2xl p-6 sm:p-8 shadow-2xl shadow-sky-950/5 backdrop-blur-md">
         
         {/* Cabecera */}
         <div className="text-center mb-6">
-          <div className="inline-flex p-3 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 mb-3 shadow-inner">
+          <div className="inline-flex p-3 rounded-2xl bg-sky-50 border border-sky-200 text-sky-600 mb-3 shadow-sm">
             <QrCode className="w-7 h-7" />
           </div>
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
             Enrolamiento de Segundo Factor (TOTP)
           </h2>
-          <p className="text-xs sm:text-sm text-slate-400 mt-1">
-            Vincule <strong className="text-slate-200">Google Authenticator</strong> para proteger su cuenta ante accesos desde dispositivos desconocidos.
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
+            Vincule <strong className="text-slate-800">Google Authenticator</strong> para proteger su cuenta ante accesos desde dispositivos desconocidos.
           </p>
         </div>
 
@@ -98,14 +98,14 @@ export default function TotpEnrollment({
         <div className="space-y-6">
           
           {/* Paso 1: Escanear Código QR */}
-          <div className="bg-slate-950/70 border border-slate-800 rounded-xl p-4 sm:p-5 flex flex-col items-center">
-            <div className="flex items-center gap-2 mb-3 text-xs font-semibold text-slate-300 uppercase tracking-wider">
-              <span className="w-5 h-5 rounded-full bg-cyan-500 text-slate-950 font-bold flex items-center justify-center text-[11px]">1</span>
+          <div className="bg-slate-50/80 border border-slate-200 rounded-xl p-4 sm:p-5 flex flex-col items-center">
+            <div className="flex items-center gap-2 mb-3 text-xs font-semibold text-slate-700 uppercase tracking-wider">
+              <span className="w-5 h-5 rounded-full bg-sky-600 text-white font-bold flex items-center justify-center text-[11px]">1</span>
               <span>Escanee el código con su móvil</span>
             </div>
 
             {/* Contenedor del QR */}
-            <div className="p-3 bg-white rounded-xl shadow-lg border border-slate-200">
+            <div className="p-3 bg-white rounded-xl shadow-md border border-slate-200">
               <QRCodeSVG 
                 value={totpUri} 
                 size={168}
@@ -114,41 +114,41 @@ export default function TotpEnrollment({
               />
             </div>
             
-            <p className="text-[11px] text-slate-400 mt-3 text-center">
-              Abra Google Authenticator o Microsoft Authenticator y pulse <strong className="text-slate-200">"Escanear código QR"</strong>.
+            <p className="text-[11px] text-slate-500 mt-3 text-center">
+              Abra Google Authenticator o Microsoft Authenticator y pulse <strong className="text-slate-700">"Escanear código QR"</strong>.
             </p>
           </div>
 
           {/* Paso 2: Clave secreta manual */}
-          <div className="bg-slate-950/70 border border-slate-800 rounded-xl p-4">
+          <div className="bg-slate-50/80 border border-slate-200 rounded-xl p-4">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
-                <Key className="w-3.5 h-3.5 text-cyan-400" />
+              <span className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
+                <Key className="w-3.5 h-3.5 text-sky-600" />
                 ¿No puede escanear? Clave manual
               </span>
               <button
                 type="button"
                 onClick={handleCopySecret}
-                className="text-xs text-cyan-400 hover:text-cyan-300 flex items-center gap-1 font-medium transition"
+                className="text-xs text-sky-600 hover:text-sky-700 flex items-center gap-1 font-medium transition cursor-pointer"
               >
-                {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                 <span>{copied ? 'Copiada' : 'Copiar clave'}</span>
               </button>
             </div>
-            <div className="bg-slate-900 border border-slate-800 p-2.5 rounded-lg text-center font-mono text-sm tracking-widest text-cyan-300 select-all font-semibold">
+            <div className="bg-white border border-slate-200 p-2.5 rounded-lg text-center font-mono text-sm tracking-widest text-sky-700 select-all font-semibold">
               {secretKey.match(/.{1,4}/g)?.join(' ') || secretKey}
             </div>
           </div>
 
           {/* Paso 3: Confirmación con código de 6 dígitos */}
           <form onSubmit={handleVerifyAndFinalize} className="space-y-4">
-            <div className="flex items-center gap-2 text-xs font-semibold text-slate-300 uppercase tracking-wider">
-              <span className="w-5 h-5 rounded-full bg-cyan-500 text-slate-950 font-bold flex items-center justify-center text-[11px]">2</span>
+            <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 uppercase tracking-wider">
+              <span className="w-5 h-5 rounded-full bg-sky-600 text-white font-bold flex items-center justify-center text-[11px]">2</span>
               <span>Confirmar vinculación</span>
             </div>
 
             <div>
-              <label className="block text-xs text-slate-400 mb-1.5">
+              <label className="block text-xs text-slate-600 mb-1.5">
                 Introduzca el código actual de 6 dígitos que muestra su app:
               </label>
               <input
@@ -157,12 +157,12 @@ export default function TotpEnrollment({
                 value={confirmationCode}
                 onChange={(e) => setConfirmationCode(e.target.value.replace(/\D/g, ''))}
                 placeholder="000000"
-                className="w-full text-center text-xl font-mono font-bold tracking-widest py-2.5 px-4 bg-slate-950 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400"
+                className="w-full text-center text-xl font-mono font-bold tracking-widest py-2.5 px-4 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-2 focus:ring-sky-500/10 transition-all"
               />
             </div>
 
             {error && (
-              <div className="p-2.5 bg-rose-500/10 border border-rose-500/20 rounded-lg text-rose-400 text-xs text-center">
+              <div className="p-2.5 bg-rose-50 border border-rose-200 rounded-lg text-rose-700 text-xs text-center">
                 {error}
               </div>
             )}
@@ -170,11 +170,11 @@ export default function TotpEnrollment({
             <button
               type="submit"
               disabled={isSubmitting || confirmationCode.length < 6}
-              className="w-full py-3 px-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-semibold rounded-xl text-sm transition-all shadow-lg shadow-cyan-500/10 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3 px-4 bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white font-semibold rounded-xl text-sm transition-all shadow-md shadow-sky-600/20 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
               {isSubmitting ? (
                 <>
-                  <div className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                   <span>Enrolando segundo factor...</span>
                 </>
               ) : (
@@ -187,11 +187,11 @@ export default function TotpEnrollment({
           </form>
 
           {/* Opciones adicionales */}
-          <div className="flex items-center justify-between pt-2 text-xs border-t border-slate-800">
+          <div className="flex items-center justify-between pt-2 text-xs border-t border-slate-200">
             <button
               type="button"
               onClick={onCancel}
-              className="text-slate-400 hover:text-slate-200 flex items-center gap-1 transition"
+              className="text-slate-500 hover:text-slate-800 flex items-center gap-1 transition cursor-pointer"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Volver</span>
@@ -200,7 +200,7 @@ export default function TotpEnrollment({
             <button
               type="button"
               onClick={() => setShowSdkCodeModal(!showSdkCodeModal)}
-              className="text-cyan-400 hover:text-cyan-300 flex items-center gap-1 font-medium transition"
+              className="text-sky-600 hover:text-sky-700 flex items-center gap-1 font-medium transition cursor-pointer"
             >
               <Code className="w-3.5 h-3.5" />
               <span>Ver implementación Firebase SDK</span>
@@ -209,11 +209,11 @@ export default function TotpEnrollment({
 
           {/* Explicación de Código Firebase v10+ para el TFM */}
           {showSdkCodeModal && (
-            <div className="p-4 bg-slate-950 border border-slate-800 rounded-xl text-xs space-y-2 font-mono text-slate-300">
-              <div className="text-cyan-400 font-sans font-semibold mb-1">
+            <div className="p-4 bg-slate-900 border border-slate-800 rounded-xl text-xs space-y-2 font-mono text-slate-300">
+              <div className="text-sky-400 font-sans font-semibold mb-1">
                 Fragmento SDK Firebase v10+ (MultiFactor TOTP):
               </div>
-              <pre className="overflow-x-auto text-[11px] text-slate-400 p-2 bg-slate-900 rounded">
+              <pre className="overflow-x-auto text-[11px] text-slate-400 p-2 bg-slate-950 rounded">
 {`import { multiFactor, TotpMultiFactorGenerator } from 'firebase/auth';
 
 // 1. Obtener sesión MFA

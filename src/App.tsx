@@ -100,13 +100,13 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-cyan-500 selection:text-slate-950">
+    <div className="min-h-screen flex flex-col font-sans bg-gradient-to-br from-sky-100/80 via-blue-50/60 to-slate-100 text-slate-800 selection:bg-sky-500 selection:text-white">
       
       {/* Toast de notificación flotante */}
       {notification && (
-        <div className="fixed top-4 right-4 z-50 animate-bounce">
-          <div className="bg-slate-900 border border-cyan-500/40 text-cyan-300 px-4 py-2.5 rounded-xl shadow-2xl text-xs font-semibold flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-cyan-400" />
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50">
+          <div className="bg-white/95 border border-sky-200 text-slate-800 px-4 py-2.5 rounded-xl shadow-xl shadow-sky-950/10 text-xs font-semibold flex items-center gap-2 backdrop-blur-md animate-in fade-in slide-in-from-top-2 duration-200">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
             <span>{notification}</span>
           </div>
         </div>
@@ -117,33 +117,13 @@ export default function App() {
         <Dashboard 
           userSession={userSession}
           onLogout={handleLogout}
-          onOpenEnrollment={() => setCurrentView('enrollment')}
         />
       ) : (
         /* Vistas de Autenticación Previa (Login, Registro, Reto MFA, Enrolamiento) */
-        <div className="flex-1 flex flex-col justify-between p-4 sm:p-6 md:p-10 relative">
+        <div className="flex-1 flex flex-col justify-between p-4 sm:p-6 md:p-8 relative">
           
-          {/* Fondo sutil con cuadrícula y resplandor de ciberseguridad */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(6,182,212,0.15),rgba(255,255,255,0))] pointer-events-none" />
-
-          {/* Barra superior institucional del TFM */}
-          <div className="max-w-4xl w-full mx-auto flex items-center justify-between text-xs z-10 pb-4 border-b border-slate-800/80">
-            <div className="flex items-center gap-2.5">
-              <div className="p-2 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400">
-                <Shield className="w-4 h-4" />
-              </div>
-              <div>
-                <span className="font-bold text-white tracking-tight">TFM · Ciberseguridad</span>
-                <span className="mx-2 text-slate-600">|</span>
-                <span className="text-slate-400">Security Dashboard con MFA Adaptativo</span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2 text-[11px] text-slate-400 font-mono">
-              <span className="w-2 h-2 rounded-full bg-cyan-400" />
-              <span>Zero-Trust Auth</span>
-            </div>
-          </div>
+          {/* Fondo sutil azul blanco con suaves gradientes */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(186,230,253,0.45),rgba(255,255,255,0))] pointer-events-none" />
 
           {/* Área Central: Renderizado del componente correspondiente según el paso del flujo */}
           <div className="my-auto py-8 z-10">
@@ -179,9 +159,9 @@ export default function App() {
 
           {/* Banner de Privacidad por Diseño (Art. 25 y 32 RGPD) */}
           <div className="max-w-2xl mx-auto w-full text-center text-xs text-slate-500 z-10 pt-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-slate-800 text-[11px] text-slate-400">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              <span>Privacidad RGPD: Los logs y huellas están anonimizados mediante SHA-256. No se procesan ni almacenan IPs ni PII.</span>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/85 border border-sky-200/80 text-[11px] text-slate-600 shadow-sm backdrop-blur-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+              <span>Privacidad RGPD: Los logs y huellas están anonimizados mediante SHA-256. Sin almacenamiento de IP ni PII.</span>
             </div>
           </div>
 
